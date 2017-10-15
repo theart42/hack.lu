@@ -1,0 +1,55 @@
+Decompile APK:
+java -jar apktool_2.3.0.jar d -o OMED omed.apk 
+
+cp frida-gadget from Tools/Frida to lib/<architecture>:
+cd OMED/lib
+mkdir arm64-v8
+cd arm64-v8
+cp ../../../../Tools/Frida/frida-gadget-10.6.11-android-arm64.so libfrida.so
+
+
+frida added in the OnCreate of MainActivity (check Manifest):
+const-string v0, "frida"
+invoke-static {v0}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
+
+Rebuild APK:
+java -jar apktool_2.3.0.jar b -o omedfrida.apk OMED
+
+when brut errors:
+On OSX: rm ~/Library/apktool/framework/1.apk
+On Linux: rm ~/apktool/framework/1.apk
+
+Gives a new apk: omedfrida.apk
+
+Needs to be signed and aligned
+
+Create keystore once
+sign jar & verify
+zipalign
+
+Uninstall app:
+
+adb shell pm list packages (nl.secureapps.demohacklu)
+adb uninstall nl.secureapps.demohacklu
+adb install omedfrida-aligned.apk
+
+
+Install frida! (see frida.re)
+
+Start app (blank screen)
+
+From OSX/Linux: frida -U Gadget:
+
+rthurs-MacBook-Pro-2:t theart42$ frida -U Gadget
+     ____
+    / _  |   Frida 10.0.3 - A world-class dynamic instrumentation framework
+   | (_| |
+    > _  |   Commands:
+   /_/ |_|       help      -> Displays the help system
+   . . . .       object?   -> Display information about 'object'
+   . . . .       exit/quit -> Exit
+   . . . .
+   . . . .   More info at http://www.frida.re/docs/home/
+
+[USB::LGE Nexus 5X::Gadget]->
+
