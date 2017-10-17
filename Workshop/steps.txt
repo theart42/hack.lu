@@ -1,3 +1,35 @@
+Setup environment:
+==================
+
+Install Android Studio
+
+Install frida! (see frida.re):
+ pip2 install frida
+ 
+Create a emulator in Android Studio (e.g. a Nexus5X running Android 7.0)
+
+Copy Nexus_5X_API_26.* to you ~/.android/avd/ directory
+
+Test by running the simulator:
+
+(List available avd's):
+~/Library/Android/sdk/tools/emulator -list-avds
+Android511_x86
+Android_ARMv7a
+Android_Accelerated_x86
+Nexus_5X_API_26
+Test
+
+Start simulator:
+~/Library/Android/sdk/tools/emulator -avd Nexus_5X_API_26 -netdelay none -netspeed full
+
+If simulator runs, then on to the next step:
+
+
+APP modification
+================
+Embed frida-gadget into your app to be tested:
+
 Decompile APK:
 java -jar apktool_2.3.0.jar d -o OMED omed.apk 
 
@@ -9,6 +41,7 @@ cp ../../../../Tools/Frida/frida-gadget-10.6.11-android-arm64.so libfrida.so
 
 
 frida added in the OnCreate of MainActivity (check Manifest):
+
 const-string v0, "frida"
 invoke-static {v0}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
 
@@ -23,24 +56,55 @@ Gives a new apk: omedfrida.apk
 
 Needs to be signed and aligned
 
-Create keystore once
+(Goto Tools directory and go to OSX or Linux, depending on your OS)
+
+Create keystore once:
+
+keytool -genkey -v -keystore hacklu.keystore -alias appdemo -keyalg RSA -keysize 2048 -validity 1000
+
+(enter data and passwords)
+
 sign jar & verify
+
+jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore hacklu.keystore -storepass <mystorepass> omedfrida.apk appdemo
+jarsigned -verify
+
 zipalign
 
-Uninstall app:
+zipalign 4 omedfrida.apk omedfrida-aligned.apk
+
+
+Test the application
+====================
+On simulator:
+
+Start simulator:
+~/Library/Android/sdk/tools/emulator -list-avds
+
+Android511_x86
+Android_ARMv7a
+Android_Accelerated_x86
+Nexus_5X_API_26
+Test
+
+~/Library/Android/sdk/tools/emulator -avd Nexus_5X_API_26 -netdelay none -netspeed full
+
+adb forward tcp:27042 tcp:27042
+
+
+Uninstall app (if installed previously):
 
 adb shell pm list packages (nl.secureapps.demohacklu)
 adb uninstall nl.secureapps.demohacklu
+
 adb install omedfrida-aligned.apk
 
-
-Install frida! (see frida.re)
 
 Start app (blank screen)
 
 From OSX/Linux: frida -U Gadget:
 
-rthurs-MacBook-Pro-2:t theart42$ frida -U Gadget
+Arthurs-MacBook-Pro-2:t theart42$ frida -U Gadget
      ____
     / _  |   Frida 10.0.3 - A world-class dynamic instrumentation framework
    | (_| |
@@ -53,3 +117,4 @@ rthurs-MacBook-Pro-2:t theart42$ frida -U Gadget
 
 [USB::LGE Nexus 5X::Gadget]->
 
+Now you are ready to hook!
