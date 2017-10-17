@@ -8,7 +8,7 @@ Install frida! (see frida.re):
  
 Create a emulator in Android Studio (e.g. a Nexus5X running Android 7.0)
 
-Copy Nexus_5X_API_26.* to you ~/.android/avd/ directory
+Copy Nexus_5X_API_24.* to you ~/.android/avd/ directory
 
 Test by running the simulator:
 
@@ -17,11 +17,11 @@ Test by running the simulator:
 Android511_x86
 Android_ARMv7a
 Android_Accelerated_x86
-Nexus_5X_API_26
+Nexus_5X_API_24
 Test
 
 Start simulator:
-~/Library/Android/sdk/tools/emulator -avd Nexus_5X_API_26 -netdelay none -netspeed full
+~/Library/Android/sdk/tools/emulator -avd Nexus_5X_API_24 -netdelay none -netspeed full
 
 If simulator runs, then on to the next step:
 
@@ -84,10 +84,10 @@ Start simulator:
 Android511_x86
 Android_ARMv7a
 Android_Accelerated_x86
-Nexus_5X_API_26
+Nexus_5X_API_24
 Test
 
-~/Library/Android/sdk/tools/emulator -avd Nexus_5X_API_26 -netdelay none -netspeed full
+~/Library/Android/sdk/tools/emulator -avd Nexus_5X_API_24 -netdelay none -netspeed full
 
 adb forward tcp:27042 tcp:27042
 
