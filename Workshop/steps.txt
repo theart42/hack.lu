@@ -9,6 +9,7 @@ Install frida! (see frida.re):
 Create a emulator in Android Studio (e.g. a Nexus5X running Android 7.0)
 
 Copy Nexus_5X_API_24.* to you ~/.android/avd/ directory
+Change the .ini file to point to your .android (change the directory)
 
 Test by running the simulator:
 
