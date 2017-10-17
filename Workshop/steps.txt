@@ -102,9 +102,15 @@ adb install omedfrida-aligned.apk
 
 Start app (blank screen)
 
+When running the simulator (after the adb forward!!):
+
+frida -H 127.0.0.1 Gadget
+
+On real device (connected via USB cable):
+
 From OSX/Linux: frida -U Gadget:
 
-Arthurs-MacBook-Pro-2:t theart42$ frida -U Gadget
+Arthurs-MacBook-Pro-2:t theart42$ frida -H 127.0.0.1 Gadget
      ____
     / _  |   Frida 10.0.3 - A world-class dynamic instrumentation framework
    | (_| |
