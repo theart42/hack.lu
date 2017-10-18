@@ -27,7 +27,7 @@ Start simulator:
 If simulator runs, then on to the next step:
 
 
-APP modification
+APK modification
 ================
 Embed frida-gadget into your app to be tested:
 
