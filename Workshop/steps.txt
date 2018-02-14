@@ -5,7 +5,7 @@ Install Android Studio
 
 Install frida! (see frida.re):
  pip2 install frida
- 
+
 Create a emulator in Android Studio (e.g. a Nexus5X running Android 7.0)
 
 Copy Nexus_5X_API_24.* to you ~/.android/avd/ directory
@@ -21,8 +21,14 @@ Android_Accelerated_x86
 Nexus_5X_API_24
 Test
 
+Add adb (platform-tools) to your path:
+export PATH=~/Android/Sdk/platform-tools:$PATH
+
 Start simulator:
 ~/Library/Android/sdk/tools/emulator -avd Nexus_5X_API_24 -netdelay none -netspeed full
+
+On Kali:
+~/Android/Sdk/emulator/emulator -avd Nexus_5X_API_24 -netdelay none -netspeed full -use-system-libs
 
 If simulator runs, then on to the next step:
 
@@ -32,7 +38,7 @@ APK modification
 Embed frida-gadget into your app to be tested:
 
 Decompile APK:
-java -jar apktool_2.3.0.jar d -o OMED omed.apk 
+java -jar apktool_2.3.0.jar d -o OMED omed.apk
 
 cp frida-gadget from Tools/Frida to lib/<architecture>:
 cd OMED/lib
@@ -50,8 +56,7 @@ Rebuild APK:
 java -jar apktool_2.3.0.jar b -o omedfrida.apk OMED
 
 when brut errors:
-On OSX: rm ~/Library/apktool/framework/1.apk
-On Linux: rm ~/apktool/framework/1.apk
+apktool empty-framework-dir --force
 
 Gives a new apk: omedfrida.apk
 
@@ -90,8 +95,10 @@ Test
 
 ~/Library/Android/sdk/tools/emulator -avd Nexus_5X_API_24 -netdelay none -netspeed full
 
-adb forward tcp:27042 tcp:27042
+On Kali:
+~/Android/Sdk/emulator/emulator -avd Nexus_5X_API_24 -netdelay none -netspeed full -use-system-libs
 
+adb forward tcp:27042 tcp:27042
 
 Uninstall app (if installed previously):
 
