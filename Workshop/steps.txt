@@ -52,6 +52,12 @@ frida added in the OnCreate of MainActivity (check Manifest):
 const-string v0, "frida"
 invoke-static {v0}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
 
+Please note that you need this permission in your AndroidManifest.xml:
+
+<uses-permission android:name="android.permission.INTERNET"/>
+
+If it is not present, add it to the manifest file
+
 Rebuild APK:
 java -jar apktool_2.3.0.jar b -o omedfrida.apk OMED
 
